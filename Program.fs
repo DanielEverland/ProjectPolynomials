@@ -77,3 +77,16 @@ let derivative (poly:int list) =
         | [] -> []
         | _ -> (List.head nPoly * i)::doDerivative(i + 1, (nPoly.[1..]))
     doDerivative (1, poly.[1..])
+
+type Degree =   | MinusInf
+                | Fin of int
+
+let degree poly =
+    match poly with
+    | [] -> MinusInf
+    | _ -> Fin (List.findIndexBack (fun x -> x <> 0) poly)
+
+let addD (a, b) =
+    match (a, b) with
+    | (MinusInf, _) | (_, MinusInf) -> MinusInf
+    | (Fin f, Fin g) -> Fin (f + g)
